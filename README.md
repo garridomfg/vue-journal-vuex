@@ -1,3 +1,7 @@
+### Practice project
+```
+Practice project in Vue3 using Composition API and Option API, Vuex, Axios, Firebase, and Unit testing in Jest using vue test-utils
+```
 # Journal App
 
 ## Project setup
