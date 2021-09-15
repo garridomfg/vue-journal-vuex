@@ -1,19 +1,85 @@
 <template>
-  <div @click="$router.push({name: 'entry', params: {id: 10}})" class="entry-container mb-3 pointer p-2">
+  <div
+    @click="$router.push({ name: 'entry', params: { id: entry.id } })"
+    class="entry-container mb-3 pointer p-2"
+  >
     <div class="entry-title d-flex">
-      <span class="text-success fs-5 fw-bold">15</span>
-      <span class="mx-1 fs-5">Julio</span>
-      <span class="mx-2 fw-light">2021, jueves</span>
+      <span class="text-success fs-5 fw-bold">{{ day }}</span>
+      <span class="mx-1 fs-5">{{ month }}</span>
+      <span class="mx-2 fw-light">{{ yearDay }}</span>
     </div>
     <div class="entry-description">
-      Et consectetur incididunt ex nostrud dolore incididunt deserunt amet
-      cillum. Commodo ipsum amet veniam anim consectetur veniam deserunt anim.
-      Aliquip voluptate qui nisi anim ex qui adipisicing. Adipisicing
-      consectetur veniam labore cupidatat. Commodo veniam irure reprehenderit
-      velit qui ex dolore cillum fugiat.
+      {{ shortText }}
     </div>
   </div>
 </template>
+
+<script>
+/* const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+]; */
+import getDayMonthYear from "../helpers/getDayMonthYear";
+
+export default {
+  props: {
+    entry: {
+      type: Object,
+      required: true,
+    },
+  },
+  computed: {
+    shortText() {
+      return this.entry.text.length > 130
+        ? this.entry.text.substring(0, 130) + "..."
+        : this.entry.text;
+    },
+    /* day() {
+      const date = new Date(this.entry.date);
+      return date.getDate();
+    },
+    month() {
+      const date = new Date(this.entry.date);
+      return months[date.getMonth()];
+    },
+    yearDay() {
+      const date = new Date(this.entry.date);
+      return `${date.getFullYear()}, ${days[date.getDay()]}`;
+    }, */
+    day() {
+      const { day } = getDayMonthYear(this.entry.date);
+      return day;
+    },
+    month() {
+      const { month } = getDayMonthYear(this.entry.date);
+      return month;
+    },
+    yearDay() {
+      const { yearDay } = getDayMonthYear(this.entry.date);
+      return yearDay;
+    },
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 .entry-container {
